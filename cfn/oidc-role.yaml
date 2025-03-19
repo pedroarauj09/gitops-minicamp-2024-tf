@@ -6,13 +6,16 @@ Resources:
   MyOIDCProvider:
     Type: 'AWS::IAM::OIDCProvider'
     Properties:
+     # this is the GitHub URL for the oidc provider
       Url: 'https://token.actions.githubusercontent.com'
+      # this site in order to get that role
       ClientIdList:
         - sts.amazonaws.com
+      # these are the official thumb prints that were provided by Github
       ThumbprintList:
         - 6938fd4d98bab03faadb97b34396831e3780aea1
         - 1c58a3a8518e8759bf075b76b750d4f2df264fcd
-  gitops2024Role:
+  gitops2025Role:
     Type: 'AWS::IAM::Role'
     Properties:
       AssumeRolePolicyDocument:
@@ -34,7 +37,7 @@ Outputs:
   RoleName:
     Description: 'The name of the IAM role for GitHub Actions'
     Value:
-      Ref: gitops2024Role
+      Ref: gitops2025Role
     Export:
       Name:
         Fn::Sub: '${AWS::StackName}-RoleName'

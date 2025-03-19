@@ -8,6 +8,7 @@ on:
 permissions:
   # permission to read content of your repo
   contents: read
+  id-token: write
 
 
 jobs:
@@ -22,6 +23,13 @@ jobs:
         shell: bash
 
     steps:
+    # Set up the AWS credentials  
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: us-east-1
+        role-to-assume: ${{ secrets.AWS_ROLE }}
+
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v4
@@ -45,6 +53,6 @@ jobs:
       # On push to $default-branch, build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
       # This script apply after  merged to main 
-    # - name: Terraform Apply
-    #   if: github.ref == 'refs/heads/$default-branch' && github.event_name == 'push'
-    #   run: terraform apply -auto-approve -input=false
+      # - name: Terraform Apply
+      #   if: github.ref == 'refs/heads/$default-branch' && github.event_name == 'push'
+      #   run: terraform apply -auto-approve -input=false
