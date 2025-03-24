@@ -1,9 +1,6 @@
-name: 'Terraform'
+name: 'Apply'
 
-on:
-  push:
-    branches: [ 'main' ]
-  pull_request:
+on: workflow_dispatch 
 
 permissions:
   # permission to read content of your repo
@@ -51,4 +48,9 @@ jobs:
     - name: Terraform Plan
       run: terraform plan -input=false
 
-    
+    # Generates an execution plan for Terraform
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -input=false
+
+
+      
