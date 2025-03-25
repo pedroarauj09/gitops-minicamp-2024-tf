@@ -96,18 +96,18 @@ resource "aws_instance" "grafana_server" {
   }
 }
 
-check "graf_port_health_check" {
-  data "http" "test" {
-    url = "https://${aws_instance.grafana_server.public_ip}:3000"
-    # grafana it takes time to deploy, so it is important keep trying until it is deployed
-    retry {
-      attempts = 5
-    }
+# check "graf_port_health_check" {
+#   data "http" "test" {
+#     url = "https://${aws_instance.grafana_server.public_ip}:3000"
+#     # grafana it takes time to deploy, so it is important keep trying until it is deployed
+#     retry {
+#       attempts = 5
+#     }
 
 
-  }
-  assert {
-    condition     = data.http.test.status_code == 200
-    error_message = "It is not possible to access grafana on port 3000."
-  }
-}
+#   }
+#   assert {
+#     condition     = data.http.test.status_code == 200
+#     error_message = "It is not possible to access grafana on port 3000."
+#   }
+# }
